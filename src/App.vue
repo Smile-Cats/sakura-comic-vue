@@ -12,7 +12,7 @@
         <div class="sakura-main">
           <!-- <router-view /> -->
           <router-view v-slot="{ Component }" :key="key">
-          <keep-alive :exclude="['MovDetailPageVue', 'MovieKeywordPageVue']">
+          <keep-alive :exclude="['MovDetailPageVue', 'MovieKeywordPageVue', 'LoginVue']">
             <component :is="Component"/>
           </keep-alive>
           </router-view>
@@ -32,6 +32,7 @@ import MovieCardList from './components/MovieCardList.vue'
 import FooterVue from './components/Footer.vue'
 import MovDetailPageVue from './views/MovDetailPage.vue'
 import MovieKeywordPageVue from './views/MovieKeywordPage.vue'
+import LoginVue from './views/Login.vue'
 
 export default {
   name: 'App',
@@ -40,7 +41,8 @@ export default {
     MovieCardList,
     FooterVue,
     MovDetailPageVue,
-    MovieKeywordPageVue
+    MovieKeywordPageVue,
+    LoginVue
   },
 
   computed: {

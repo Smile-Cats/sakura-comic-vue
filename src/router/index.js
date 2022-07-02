@@ -6,6 +6,11 @@ const routes = [
     component: () => import('../views/MovieHome.vue')
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Login.vue')
+  },
+  {
     path: '/movtype/:movtype',
     component:  () => import('../views/MoviePage.vue'),
     props: true

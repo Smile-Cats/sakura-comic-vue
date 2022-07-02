@@ -1,4 +1,7 @@
 import axios from 'axios'
+import { localGet } from '../utils'
+
+const token = localGet('token')
 
 // 创建一个 axios 实例
 const service = axios.create({
@@ -9,7 +12,7 @@ const service = axios.create({
 	headers: {
 		// 设置后端需要的传参类型
 		'Content-Type': 'application/json',
-		'token': 'your token',
+		'Authorization': token,
 		'X-Requested-With': 'XMLHttpRequest',
 	},
 })

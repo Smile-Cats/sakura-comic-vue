@@ -1,3 +1,13 @@
+function haveToken() {
+    const value = window.localStorage.getItem('token')
+    if (value) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
 export default {
     countVuex: 0,
     type_names: {
@@ -7,5 +17,7 @@ export default {
         4: ['动漫','动画电影','国产动漫','日本动漫','欧美动漫','海外动漫'],
         5: ['资讯','公告','头条'],
         0: ['电影','连续剧','综艺','动漫','资讯']
-    }
+    },
+    isLogining: haveToken(),
+    user: {},
 }

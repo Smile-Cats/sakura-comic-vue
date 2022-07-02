@@ -15,8 +15,8 @@
     <el-menu-item index="/movtype/1">电影</el-menu-item>
     <el-menu-item index="/movtype/2">电视剧</el-menu-item>
     <el-menu-item index="/movtype/3">综艺</el-menu-item>
-    <!-- <el-menu-item index="5">追番</el-menu-item>
-    <el-menu-item index="6">个人空间</el-menu-item> -->
+    <el-menu-item index="5" v-if="isLogining">社区</el-menu-item>
+    <el-menu-item index="6" v-if="isLogining">个人空间</el-menu-item>
     <div class="menu-input">
       <el-input
         v-model="input"
@@ -27,7 +27,10 @@
       />
     </div>
     <div style="position: absolute; right: 0px;">
-        <p class="login" style="margin: 15px 11px">
+        <p class="login-out" style="margin: 15px 11px" v-if="isLogining" @click="loginOut">
+            {{ user.name }}
+        </p>
+        <p class="login" style="margin: 15px 11px" v-else @click="login">
             登录/注册
         </p>
     </div>
@@ -38,22 +41,48 @@
 import { ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { localRemove } from '../utils'
+import { getUserInfo } from '../apis/login'
+
 
 export default {
     name: "SakuraMenu",
     setup() {
+        const store = useStore()
         const router = useRouter()
         console.log(router.currentRoute.value)
         const activeIndex = ref('/')
         // console.log(activeIndex.value)
         console.log(router.currentRoute.value)
         const input = ref('')
+        const isLogining = ref(store.state.appStore.isLogining)
+        
+        const loginOut = function() {
+          localRemove('token')
+          window.location.reload()
+        }
+
+        const login = function() {
+          router.push({ name: 'login' })
+        }
+
         return {
             router,
             activeIndex,
             input,
+            store,
+            isLogining,
+            loginOut,
+            login,
             Search
             }
+    },
+
+    data() {
+      return {
+        user: {}
+      }
     },
 
     methods: {
@@ -69,7 +98,29 @@ export default {
             this.activeIndex = '/'
             this.router.push({ name: 'search', query: { keyword: this.input }})
           }
-        }
+        },
+
+        getUserInfo() {
+          if (this.isLogining) {
+            // 已登录用户获取用户名
+            getUserInfo().then(
+              (res) => {
+                console.log(res.data)
+                if (res.data.code == 200) {
+                  this.store.state.appStore.user = res.data.data
+                  this.user = this.store.state.appStore.user
+                  console.log(this.user)
+                } else {
+                ElMessage({
+                message: res.data.message,
+                type: 'warning',
+                })
+            }
+              }
+            )
+          } 
+        },
+
     },
 
 
@@ -89,6 +140,22 @@ export default {
             this.activeIndex = '/'
           }
         )
+    },
+
+    created() {
+      this.getUserInfo()
+    },
+
+    watch: {
+      moniterLogining() {
+        return this.store.state.appStore.isLogining
+      }
+    },
+
+    computed: {
+      moniterLogining() {
+        this.isLogining = this.store.state.appStore.isLogining
+      }
     }
 }
 
@@ -118,6 +185,14 @@ export default {
 .el-menu-item:hover {
   background-color: white !important;
   color: #24b8f2 !important;
+}
+
+p.login:hover {
+  color: #24b8f2
+}
+
+p.login-out:hover {
+  color: #24b8f2
 }
 
 .el-menu {
