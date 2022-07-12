@@ -51,6 +51,6 @@ export default {
       // console.log(this.$route.fullPath);
       return this.$route.fullPath
     }
-  }
+  },
 }
 </script>

@@ -19,5 +19,5 @@ export default {
         0: ['电影','连续剧','综艺','动漫','资讯']
     },
     isLogining: haveToken(),
-    user: {},
+    user: {}
 }

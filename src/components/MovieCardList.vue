@@ -144,7 +144,7 @@ export default {
               vod_class: this.vod_class,
               vod_year: this.vod_year }
 
-          console.log(param)
+          // console.log(param)
           apiGetMovList(param).then(
             (res) => { 
               // console.log(res)

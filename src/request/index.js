@@ -5,8 +5,8 @@ const token = localGet('token')
 
 // 创建一个 axios 实例
 const service = axios.create({
-	// baseURL: 'http://127.0.0.1:5000', // 所有的请求地址前缀部分
-	baseURL: 'http://139.196.138.236:5000',
+	baseURL: 'http://127.0.0.1:5000', // 所有的请求地址前缀部分
+	// baseURL: 'http://139.196.138.236:5000',
 	timeout: 60000, // 请求超时时间毫秒
 	withCredentials: true, // 异步请求携带cookie
 	headers: {
@@ -33,7 +33,7 @@ service.interceptors.request.use(
 // 添加响应拦截器
 service.interceptors.response.use(
 	function (response) {
-		console.log(response)
+		// console.log(response)
 		// 2xx 范围内的状态码都会触发该函数。
 		// 对响应数据做点什么
 		// dataAxios 是 axios 返回数据中的 data

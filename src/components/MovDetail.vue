@@ -75,6 +75,17 @@
 
                 <el-row>
                     <span class="des-name">
+                        收藏:&nbsp;&nbsp;
+                        <p class="des-content"> 
+                            <el-icon :size="26" style="vertical-align: middle;" v-if="!isCollect" color="#999" @click="addCollect"><StarFilled /></el-icon>
+                            <el-icon :size="26" style="vertical-align: middle" v-else color="yellow" @click="removeCollect"><StarFilled /></el-icon>  
+                        </p>
+                    </span>
+                    
+                </el-row>
+
+                <el-row>
+                    <span class="des-name">
                         主演:&nbsp;&nbsp;
                         <p class="des-content"> {{ mov_detail.vod_actor }}</p>
                     </span>
@@ -121,9 +132,19 @@
 import apiGetMovDetail from '../apis/getMovDetail'
 import myVideoPlay from './VideoPlay.vue'
 import { ElMessage } from 'element-plus'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { isCollectVideo, addCollectVideo, removeCollectVideo } from '../apis/videoCollection'
 
 export default {
   name: 'MovDetail',
+
+  setup() {
+    const store = useStore()
+    return {
+        store
+    }
+  },
 
   components: {
     myVideoPlay
@@ -137,7 +158,8 @@ export default {
         mov_detail: {},
         video_play: false,
         video_play_url: '',  // 此时正在播放的 视频url
-        activeName: ''
+        activeName: '',
+        isCollect: 0  // 此视频是否被收藏
     }
   },
 
@@ -158,6 +180,84 @@ export default {
         )
     },
 
+    addCollect() {
+        // 将此视频添加收藏
+        console.log("add collect")
+        if (this.store.state.appStore.isLogining) {
+            var params = {
+                vod_id: this.vod_id,
+                user_id: this.store.state.appStore.user.id
+            }
+            addCollectVideo(params).then(
+                (res) => {
+                    if (res.data.code == 200) {
+                        this.isCollect = 1
+                    } else {
+                        ElMessage({
+                                message: res.data.message,
+                                type: 'warning',
+                            })
+                    }
+                }
+            )
+        } else {
+            ElMessage({
+                        message: '请先登录',
+                        type: 'warning',
+                            })
+        }
+    },
+
+    removeCollect() {
+        console.log("remove collect")
+        if (this.store.state.appStore.isLogining) {
+            var params = {
+                vod_id: this.vod_id,
+                user_id: this.store.state.appStore.user.id
+            }
+            removeCollectVideo(params).then(
+                (res) => {
+                    if (res.data.code == 200) {
+                        this.isCollect = 0
+                    } else {
+                        ElMessage({
+                                message: res.data.message,
+                                type: 'warning',
+                            })
+                    }
+                }
+            )
+        } else {
+            ElMessage({
+                        message: '请先登录',
+                        type: 'warning',
+                            })
+        }
+    },
+
+    showIsCollect() {
+        // 显示此视频是否被收藏
+        if (this.store.state.appStore.isLogining) {
+            var params = {
+                vod_id: this.vod_id,
+                user_id: this.store.state.appStore.user.id
+            }
+            isCollectVideo(params).then(
+                (res) => {
+                    if (res.data.code == 200) {
+                        this.isCollect = res.data.data
+                        console.log(this.isCollect)
+                    } else {
+                        ElMessage({
+                                message: res.data.message,
+                                type: 'warning',
+                            })
+                    }
+                }
+            )
+        }
+    },
+
     videoPlay(v) {
         // 点击按钮时修改 视频播放的链接
         var play_url = v.currentTarget.attributes.href.value
@@ -176,6 +276,7 @@ export default {
     },
 
     checkHtml(s) {
+        // 判断它是否是html
         if (typeof(s) == 'string') {
             if (s.indexOf('<p>')>-1) {
                 return true
@@ -189,6 +290,20 @@ export default {
         }
     }
   },
+
+   watch: {
+      // user出现变化后 请求数据 查看是视频是否被收藏
+      moniterUser() {
+        return this.store.state.appStore.user.id
+      }
+    },
+
+    computed: {
+      moniterUser() {
+        this.showIsCollect()
+      }
+    },
+
 
   created() {
     this.getMovDetail()

@@ -15,8 +15,7 @@
     <el-menu-item index="/movtype/1">电影</el-menu-item>
     <el-menu-item index="/movtype/2">电视剧</el-menu-item>
     <el-menu-item index="/movtype/3">综艺</el-menu-item>
-    <el-menu-item index="5" v-if="isLogining">社区</el-menu-item>
-    <el-menu-item index="6" v-if="isLogining">个人空间</el-menu-item>
+    <!-- <el-menu-item index="/movtype/5">社区</el-menu-item> -->
     <div class="menu-input">
       <el-input
         v-model="input"
@@ -27,12 +26,29 @@
       />
     </div>
     <div style="position: absolute; right: 0px;">
-        <p class="login-out" style="margin: 15px 11px" v-if="isLogining" @click="loginOut">
+        <el-dropdown class="login-out" style="margin: 15px 11px" v-if="isLogining"  trigger="click">
+          <span class="el-dropdown-link">
             {{ user.name }}
-        </p>
-        <p class="login" style="margin: 15px 11px" v-else @click="login">
+            <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                  <router-link :to="'/personSapce/'+ user.id" style="text-decoration: none; color: #606266">个人空间</router-link>
+              </el-dropdown-item>
+            
+             
+              <el-dropdown-item @click="loginOut">
+                  登出
+		          </el-dropdown-item>
+              
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+
+        <el-button link type="primary" class="login" style="margin: 15px 11px; color: black" v-else @click="login">
             登录/注册
-        </p>
+        </el-button>
     </div>
   </el-menu>
 </template>
@@ -51,10 +67,10 @@ export default {
     setup() {
         const store = useStore()
         const router = useRouter()
-        console.log(router.currentRoute.value)
+        // console.log(router.currentRoute.value)
         const activeIndex = ref('/')
         // console.log(activeIndex.value)
-        console.log(router.currentRoute.value)
+        // console.log(router.currentRoute.value)
         const input = ref('')
         const isLogining = ref(store.state.appStore.isLogining)
         
@@ -87,7 +103,7 @@ export default {
 
     methods: {
         handleSelect(key, keyPath)  {
-            console.log(key)
+            // console.log(key)
             this.activeIndex = key
             this.input = ''
           },
@@ -105,11 +121,11 @@ export default {
             // 已登录用户获取用户名
             getUserInfo().then(
               (res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 if (res.data.code == 200) {
                   this.store.state.appStore.user = res.data.data
                   this.user = this.store.state.appStore.user
-                  console.log(this.user)
+                  // console.log(this.user)
                 } else {
                 ElMessage({
                 message: res.data.message,
@@ -120,6 +136,11 @@ export default {
             )
           } 
         },
+
+        ToUserCenter() {
+          console.log("前往用户中心")
+          this.router.push({name: 'personSapce'})
+        }
 
     },
 
@@ -187,13 +208,13 @@ export default {
   color: #24b8f2 !important;
 }
 
-p.login:hover {
+/* .el-button.login:hover {
   color: #24b8f2
 }
 
 p.login-out:hover {
   color: #24b8f2
-}
+} */
 
 .el-menu {
   border: none !important;
