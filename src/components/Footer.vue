@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// 页脚
 export default {
   name: 'Footer'
 }

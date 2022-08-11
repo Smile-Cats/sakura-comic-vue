@@ -3,6 +3,7 @@
 </template>
 
 <script>
+// 根据关键词搜索的视频页
 import MovieCardListVue from '../components/MovieCardList.vue'
 
 export default {

@@ -129,6 +129,7 @@
 </template>
 
 <script>
+// 视频详情
 import apiGetMovDetail from '../apis/getMovDetail'
 import myVideoPlay from './VideoPlay.vue'
 import { ElMessage } from 'element-plus'

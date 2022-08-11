@@ -45,6 +45,7 @@
 </template>
 
 <script>
+// 有限展示视频卡片列表
 import apiGetMovList from '../apis/getMovInfo'
 import SakuraBigImg from './SakuraBigImg.vue'
 // import SakuraTypeButton from './SakuraTypeButton.vue'
@@ -94,13 +95,11 @@ export default {
               movtype: this.movtype 
               }
 
-          console.log(param)
           apiGetMovList(param).then(
             (res) => { 
-              // console.log(res)
-              if (res.length > 0) {
-                  for (var i in res) {
-                    this.movieList.push(res[i])
+              if (res.data.length > 0) {
+                  for (var i in res.data) {
+                    this.movieList.push(res.data[i])
                  }
               } else {
                 this.contentShow = false

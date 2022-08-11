@@ -1,7 +1,7 @@
 <template>
     <vue3videoPlay  
     width="100%"
-    title="冰河世纪"
+    title=""
     :src="src"
     :type="type"
     @ended="onEnd"
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-
+// 视频播放器
 import 'vue3-video-play/dist/style.css'
 import vue3videoPlay from 'vue3-video-play'
 // import { videoPlay } from 'vue-video-play'

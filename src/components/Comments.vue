@@ -67,6 +67,7 @@ import { ElMessage } from 'element-plus'
 import { postComments, showComments, replyComment } from '../apis/comments'
 
 export default {
+    // 评论组件
     name: 'Comment',
     setup() {
         const store = useStore()

@@ -61,6 +61,7 @@ import SakuraBigImg from './SakuraBigImg.vue'
 import { useStore } from 'vuex'
 
 export default {
+  // 无限滚动展示视频列表
     name: "MovieCardList",
     props: {
         movtype: String,
@@ -148,11 +149,11 @@ export default {
           apiGetMovList(param).then(
             (res) => { 
               // console.log(res)
-              if (res.length > 0) {
+              if (res.data.length > 0) {
                 this.contentShow = true
                 this.infiniteMsgShow = true
-                  for (var i in res) {
-                    this.movieList.push(res[i])
+                  for (var i in res.data) {
+                    this.movieList.push(res.data[i])
                  }
                   this.disabled = false // 还有多余数据时 无限滚动打开
               } else {

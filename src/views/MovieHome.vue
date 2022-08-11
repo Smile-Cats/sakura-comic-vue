@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// 首页
 import SakuraBigImgVue from '../components/SakuraBigImg.vue'
 import MovLimitCardVue from '../components/MovLimitCard.vue'
 

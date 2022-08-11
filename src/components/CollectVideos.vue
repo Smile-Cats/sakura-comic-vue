@@ -52,6 +52,7 @@ import { showCollectVideo } from '../apis/videoCollection'
 import { useStore } from 'vuex'
 
 export default {
+  // 视频收藏组件
     name: "CollectVideos",
     props: {
         user_id: String

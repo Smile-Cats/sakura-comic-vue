@@ -36,10 +36,6 @@ const routes = [
     component: () => import('../views/MovDetailPage.vue'),
     props: true
   },
-//   {
-//     path: '/film',
-//     component: () => import('../views/Film.vue')
-//   }
 ];
 
 

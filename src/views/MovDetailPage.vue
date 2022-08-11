@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// 详情页
 import MovDetail from '../components/MovDetail.vue'
 import CommentVue from '../components/Comments.vue'
 

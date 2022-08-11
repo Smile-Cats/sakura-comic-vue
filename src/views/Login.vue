@@ -2,7 +2,6 @@
   <div class="login-body">
     <div class="login-container">
       <div class="head">
-        <!-- <img class="logo" src="https://s.weituibao.com/1582958061265/mlogo.png" /> -->
         <div class="name">
           <div class="title">Avalon</div>
           <div class="tips">动漫、视频交流分享网站</div>
@@ -31,6 +30,7 @@
 </template>
 
 <script>
+// 登录页
 import { reactive, ref, toRefs } from 'vue'
 import { useStore } from 'vuex'
 import { localSet } from '../utils'
@@ -146,6 +146,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 5px;
     background-color: #fff;
     /* background-image: linear-gradient(25deg, #077f7c, #3aa693, #5ecfaa, #7ffac2); */
   }
