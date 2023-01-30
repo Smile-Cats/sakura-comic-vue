@@ -1,11 +1,7 @@
-# Vue 3 + Vite
+# sakura-comic-vue
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+动漫网站前端部分
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
-预览: http://139.196.138.236:8000/#/
-
-后端使用 Python + flask， 项目地址：https://github.com/Smile-Cats/sakura-comic-flask
+1. 一个用于追番的动漫网站，实现了动漫视频的更新与展示，用户注册和登录，评论和回复，视频收藏的功能
+2. 技术栈，前端： vue3 + vite + element plus, 后端：flask + gunicorn + mysql 
+预览： http://139.196.138.236:8000/#/
